@@ -1,8 +1,8 @@
 # render.yaml
 services:
   - type: web
-    name: flask-app
+    name: movie-reservation
     env: python
-    buildCommand: ""
-    startCommand: "python app.py"
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "python backend/app.py"
     plan: free
