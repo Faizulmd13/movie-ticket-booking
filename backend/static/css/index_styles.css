@@ -1,0 +1,62 @@
+/* Apply dark background to the entire page */
+body.bg-gray-100 {
+    background-color: #121212 !important;
+    color: #e0e0e0;
+  }
+  
+  /* Heading text color */
+  .text-3xl {
+    color: #bb86fc;
+  }
+  
+  /* Button for My Bookings */
+  .bg-blue-500 {
+    background-color: #6200ea !important;
+    color: white !important;
+  }
+  
+  .bg-blue-500:hover {
+    background-color: #3700b3 !important;
+  }
+  
+  /* Movie card container */
+  .bg-white {
+    background-color: #1e1e1e !important;
+    color: #e0e0e0;
+  }
+  
+  /* Movie card hover effect (optional) */
+  .bg-white:hover {
+    background-color: #2a2a2a !important;
+  }
+  
+  /* Movie description text */
+  .text-gray-700 {
+    color: #cccccc !important;
+  }
+  
+  /* Movie subtitle or small text */
+  .text-sm {
+    color: #aaaaaa !important;
+  }
+  
+  /* Card image style */
+  img {
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  /* Grid padding */
+  .p-4 {
+    padding: 1rem !important;
+  }
+  
+  /* Headline spacing */
+  .mb-6 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem !important;
+  }
+  

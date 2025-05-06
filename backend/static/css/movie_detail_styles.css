@@ -1,0 +1,79 @@
+/* Dark background for the page */
+body.bg-gray-100 {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+/* General container text */
+.container {
+  color: #e0e0e0 !important;
+}
+
+/* Movie detail card and showtime card */
+.bg-white {
+  background-color: #1f1f1f !important;
+  color: #e0e0e0 !important;
+}
+
+/* Headings */
+.text-3xl {
+  color: #bb86fc !important;
+}
+
+.text-2xl,
+.text-xl {
+  color: #d0b3ff !important;
+}
+
+/* Paragraphs and movie descriptions */
+.text-gray-700 {
+  color: #cccccc !important;
+}
+
+/* Seat buttons */
+.bg-blue-500 {
+  background-color: #2962ff !important;
+}
+
+.bg-gray-500 {
+  background-color: #555 !important;
+}
+
+/* Modal background overlay */
+#confirmationModal,
+#successMessage {
+  background-color: rgba(18, 18, 18, 0.9) !important;
+}
+
+/* Modal card */
+#confirmationModal .bg-white,
+#successMessage .bg-white {
+  background-color: #2a2a2a !important;
+  color: #e0e0e0 !important;
+}
+
+/* Modal buttons */
+#cancelButton {
+  background-color: #888 !important;
+}
+
+#confirmButton {
+  background-color: #3700b3 !important;
+}
+
+#closeSuccessButton {
+  background-color: #2e7d32 !important;
+}
+
+/* Button hover states (optional) */
+#cancelButton:hover {
+  background-color: #777 !important;
+}
+
+#confirmButton:hover {
+  background-color: #4a148c !important;
+}
+
+#closeSuccessButton:hover {
+  background-color: #1b5e20 !important;
+}

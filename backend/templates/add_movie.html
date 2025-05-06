@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Movie</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto p-5">
+      <h1 class="text-3xl font-bold mb-4">Add New Movie</h1>
+
+      <form action="{{ url_for('add_movie') }}" method="POST" class="space-y-4">
+        <div>
+          <label for="title" class="block text-xl">Title</label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            required
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <div>
+          <label for="description" class="block text-xl">Description</label>
+          <textarea
+            name="description"
+            id="description"
+            required
+            class="w-full p-2 border border-gray-300 rounded"
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="image_url" class="block text-xl">Image URL</label>
+          <input
+            type="url"
+            name="image_url"
+            id="image_url"
+            required
+            class="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">
+          Add Movie
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

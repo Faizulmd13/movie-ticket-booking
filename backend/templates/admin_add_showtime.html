@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Add Showtime</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <h1 class="text-2xl font-bold mb-4">Add Showtime</h1>
+  <form method="POST" class="bg-white shadow-md p-4 rounded space-y-4">
+    <div>
+      <label class="block font-semibold">Movie</label>
+      <select name="movie_id" required class="border px-2 py-1 w-full">
+        {% for movie in movies %}
+        <option value="{{ movie['id'] }}">{{ movie['title'] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="block font-semibold">Start Time</label>
+      <input type="datetime-local" name="datetime" required class="border px-2 py-1 w-full">
+    </div>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add Showtime</button>
+  </form>
+</body>
+</html>

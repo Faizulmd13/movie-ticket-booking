@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Bookings</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="{{ url_for('static', filename='css/my_bookings_styles.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-100 p-6">
+    <a href="/" class="text-blue-600 hover:underline mb-4 inline-block"
+      >← Back to Movies</a
+    >
+    <h1 class="text-3xl font-bold mb-4">My Booked Seats</h1>
+
+    {% if seats %}
+    <ul class="space-y-4">
+      {% for seat in seats %}
+      <li class="bg-white p-4 rounded shadow">
+        <p><strong>Movie:</strong> {{ seat.movie.title }}</p>
+        <p>
+          <strong>Showtime:</strong> {{ seat.showtime.datetime|datetimeformat }}
+        </p>
+        <p><strong>Seat Number:</strong> {{ seat.seat_number }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>You haven’t booked any seats yet.</p>
+    {% endif %}
+  </body>
+</html>

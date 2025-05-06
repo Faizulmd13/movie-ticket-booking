@@ -1,0 +1,54 @@
+/* Dark mode base settings */
+body {
+  background-color: #121212 !important; /* true dark background */
+  color: #e0e0e0 !important; /* light neutral text */
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+}
+
+/* Links */
+a {
+  color: #93c5fd; /* Tailwind blue-300 */
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #60a5fa; /* Tailwind blue-400 */
+  text-decoration: underline;
+}
+
+/* Headings */
+h1 {
+  color: #f1f5f9; /* Tailwind slate-50 */
+}
+
+/* List container */
+ul {
+  color: inherit;
+}
+
+/* List items / cards */
+li {
+  background-color: #1e293b; /* Tailwind slate-800 */
+  color: #8babcb; /* Tailwind slate-50 */
+  border-left: 4px solid #3b82f6; /* Tailwind blue-500 */
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+li:hover {
+  transform: scale(1.01);
+  background-color: #334155; /* Tailwind slate-700 */
+}
+
+/* Paragraphs */
+p {
+  color: #cbd5e1; /* Tailwind slate-300 */
+  margin: 0.25rem 0;
+}
+
+/* Labels */
+strong {
+  color: #facc15; /* Tailwind yellow-400 for better readability */
+}

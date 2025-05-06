@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Available Movies</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/index_styles.css') }}"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold">Available Movies</h1>
+      <a
+        href="/my_bookings"
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >My Bookings</a
+      >
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for movie in movies %}
+      <a href="/movie/{{ movie.id }}">
+        <div class="bg-white p-4 rounded-xl shadow-md">
+          <img
+            src="{{ movie.poster_url }}"
+            alt="{{ movie.title }}"
+            class="rounded-lg mb-4 h-64 w-full object-cover"
+          />
+          <h2 class="text-xl font-semibold">{{ movie.title }}</h2>
+          <p class="text-gray-700 mb-2">{{ movie.description }}</p>
+          <!-- Remove this line for now -->
+          <!-- <p class="text-sm text-gray-500">Showtimes: {{ movie.showtimes }}</p> -->
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </body>
+</html>
