@@ -1,0 +1,91 @@
+/* === Dark Theme Base === */
+body.bg-gray-100 {
+  background-color: #121212 !important;
+  color: #e0e0e0 !important;
+}
+
+.container {
+  color: #e0e0e0 !important;
+}
+
+/* === Card Backgrounds === */
+.bg-white {
+  background-color: #1f1f1f !important;
+  color: #e0e0e0 !important;
+}
+
+.shadow-md {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* === Headings === */
+.text-3xl {
+  color: #bb86fc !important;
+}
+
+.text-2xl,
+.text-xl {
+  color: #d0b3ff !important;
+}
+
+/* === Description Text === */
+.text-gray-700 {
+  color: #cccccc !important;
+}
+
+/* === Seat Buttons === */
+.bg-blue-500 {
+  background-color: #2962ff !important;
+}
+
+.bg-gray-500 {
+  background-color: #555 !important;
+}
+
+.seat {
+  transition: transform 0.2s ease-in-out;
+}
+
+.seat:hover:not(:disabled) {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* === Modal Overlays === */
+#confirmationModal,
+#successMessage {
+  background-color: rgba(18, 18, 18, 0.9) !important;
+}
+
+/* === Modal Cards === */
+#confirmationModal .bg-white,
+#successMessage .bg-white {
+  background-color: #2a2a2a !important;
+  color: #e0e0e0 !important;
+}
+
+/* === Modal Buttons === */
+#cancelButton {
+  background-color: #888 !important;
+}
+
+#confirmButton {
+  background-color: #3700b3 !important;
+}
+
+#closeSuccessButton {
+  background-color: #2e7d32 !important;
+}
+
+/* === Button Hover Effects === */
+#cancelButton:hover {
+  background-color: #777 !important;
+}
+
+#confirmButton:hover {
+  background-color: #4a148c !important;
+}
+
+#closeSuccessButton:hover {
+  background-color: #1b5e20 !important;
+}

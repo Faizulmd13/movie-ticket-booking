@@ -9,8 +9,7 @@ import os
 app = Flask(__name__)
 load_dotenv()
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
-
+app.config['DEBUG'] = True
 # Supabase credentials
 SUPABASE_URL = "https://ssazaghelgambfsamnmh.supabase.co"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzYXphZ2hlbGdhbWJmc2Ftbm1oIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU5MzM4MjksImV4cCI6MjA2MTUwOTgyOX0.ZEQ_HsAAUl2lKAyk2fwhcamQPppb7AsHN7clmOJU7EM"
@@ -21,7 +20,6 @@ ADMIN_USERNAME = "admin"
 ADMIN_PASSWORD = "password"  # Replace with secure password management later
 
 # Admin login route
-
 
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -303,6 +301,20 @@ def admin_logout():
     return redirect(url_for('admin_login'))  # Redirect to login page
 
 
+@app.route('/check-username', methods=['POST'])
+def check_username():
+    username = request.json.get('username')
+    if not username:
+        return jsonify({"available": False, "message": "No username provided"}), 400
+
+    # Check if user exists in the database
+    response = supabase.table("users").select(
+        "id").eq("username", username).execute()
+    if response.data:
+        return jsonify({"available": False, "message": "Username is taken"}), 200
+    return jsonify({"available": True, "message": "Username is available"}), 200
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
@@ -332,13 +344,19 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        # Fetch user by username
+        # Fetch user by username (remove `.single()`)
         user_data = supabase.table("users").select(
-            '*').eq('username', username).single().execute()
-        user = user_data.data
+            '*').eq('username', username).execute()
+        users = user_data.data
 
-        if user and check_password_hash(user['password'], password):
-            session['user_id'] = user['id']  # Store user ID in session
+        if not users:
+            flash("No account found. Please register first.", "error")
+            return redirect(url_for('register'))
+
+        user = users[0]  # Now safe to access first result
+
+        if check_password_hash(user['password'], password):
+            session['user_id'] = user['id']
             flash("Login successful!", "success")
             return redirect(url_for('index'))
         else:
@@ -354,23 +372,35 @@ def logout():
     flash("You have been logged out.", "info")
     return redirect(url_for('index'))
 
+
+@app.route('/profile')
+def profile():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user = supabase.table("users").select("username").eq(
+        "id", session['user_id']).single().execute().data
+    return render_template("profile.html", username=user['username'])
+
 # Assign user_id via cookie or session
 
 
 @app.route('/')
 def index():
-    # Redirect to login if not logged in
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
     try:
+        # Get user details
+        user_response = supabase.table("users").select("username").eq(
+            "id", session['user_id']).single().execute()
+        username = user_response.data['username'] if user_response.data else "User"
+
         # Fetch movies
         response = supabase.table("movies").select("*").execute()
         movies = response.data
 
-        return render_template('index.html', movies=movies)
-    except httpx.ConnectError as e:
-        return f"Connection Error: {str(e)}", 500
+        return render_template('index.html', movies=movies, username=username)
     except Exception as e:
         return f"An error occurred: {str(e)}", 500
 
@@ -402,6 +432,36 @@ def movie_detail(movie_id):
 
     except httpx.ConnectError as e:
         return f"Connection Error: {str(e)}", 500
+    except Exception as e:
+        return f"An error occurred: {str(e)}", 500
+
+
+@app.route('/seat_booking/<int:showtime_id>')
+def seat_booking(showtime_id):
+    try:
+        # Fetch showtime details based on showtime_id
+        showtime_data = supabase.table('showtimes').select(
+            '*').eq('id', showtime_id).single().execute()
+        showtime = showtime_data.data
+
+        # Fetch the movie details based on the showtime_id
+        movie_data = supabase.table('movies').select(
+            '*').eq('id', showtime['movie_id']).single().execute()
+        movie = movie_data.data
+
+        # Fetch seats for this showtime
+        seats_data = supabase.table('seats').select(
+            '*').eq('showtime_id', showtime_id).order('seat_number').execute()
+
+        # Adding 'is_booked' status for each seat
+        for seat in seats_data.data:
+            seat['is_booked'] = seat.get('is_booked', False)
+
+        showtime['seats'] = seats_data.data
+        user_id = session.get('user_id')
+
+        return render_template('seat_booking.html', movie=movie, showtime=showtime, user_id=user_id)
+
     except Exception as e:
         return f"An error occurred: {str(e)}", 500
 

@@ -8,8 +8,23 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/register_styles.css') }}"
     />
+    <style>
+      #username-message {
+        font-size: 0.9em;
+        margin-top: 5px;
+      }
+      #username-message.available {
+        color: green;
+      }
+      #username-message.unavailable {
+        color: red;
+      }
+      input.error {
+        border: 1px solid red;
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-gray-100">
     <div class="form-container">
       <h2>Register</h2>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
@@ -24,6 +39,7 @@
       <form method="POST">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required />
+        <div id="username-message"></div>
 
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required />
@@ -43,5 +59,50 @@
         Already registered? <a href="{{ url_for('login') }}">Log in here</a>
       </p>
     </div>
+
+    <script>
+      const usernameInput = document.getElementById("username");
+      const messageDiv = document.getElementById("username-message");
+
+      let debounceTimeout;
+      usernameInput.addEventListener("input", () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          const username = usernameInput.value.trim();
+          if (username.length < 3) {
+            messageDiv.textContent = "Username must be at least 3 characters";
+            messageDiv.className = "unavailable";
+            usernameInput.classList.add("error");
+            return;
+          }
+
+          fetch("/check-username", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.available) {
+                messageDiv.textContent = "Username is available";
+                messageDiv.className = "available";
+                usernameInput.classList.remove("error");
+              } else {
+                messageDiv.textContent = "Username is unavailable";
+                messageDiv.className = "unavailable";
+                usernameInput.classList.add("error");
+              }
+            })
+            .catch((err) => {
+              console.error(err);
+              messageDiv.textContent = "Error checking username";
+              messageDiv.className = "unavailable";
+              usernameInput.classList.add("error");
+            });
+        }, 500); // debounce
+      });
+    </script>
   </body>
 </html>

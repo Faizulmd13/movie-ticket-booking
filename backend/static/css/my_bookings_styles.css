@@ -5,16 +5,6 @@ body {
   font-family: "Segoe UI", Roboto, system-ui, sans-serif;
 }
 
-/* Links */
-a {
-  color: #93c5fd; /* Tailwind blue-300 */
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: #60a5fa; /* Tailwind blue-400 */
-  text-decoration: underline;
-}
 
 /* Headings */
 h1 {

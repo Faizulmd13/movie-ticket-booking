@@ -13,25 +13,26 @@
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-3xl font-bold">Available Movies</h1>
       <a
-        href="/my_bookings"
-        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-        >My Bookings</a
+        href="/profile"
+        class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 font-medium"
       >
+        Profile
+      </a>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {% for movie in movies %}
       <a href="/movie/{{ movie.id }}">
-        <div class="bg-white p-4 rounded-xl shadow-md">
+        <div class="bg-white p-4 rounded-xl shadow-md h-[500px] flex flex-col">
           <img
             src="{{ movie.poster_url }}"
             alt="{{ movie.title }}"
-            class="rounded-lg mb-4 h-64 w-full object-cover"
+            class="rounded-lg mb-4 h-[250px] w-full object-cover"
           />
-          <h2 class="text-xl font-semibold">{{ movie.title }}</h2>
-          <p class="text-gray-700 mb-2">{{ movie.description }}</p>
-          <!-- Remove this line for now -->
-          <!-- <p class="text-sm text-gray-500">Showtimes: {{ movie.showtimes }}</p> -->
+          <h2 class="text-xl font-semibold truncate">{{ movie.title }}</h2>
+          <p class="text-gray-700 text-sm overflow-y-auto">
+            {{ movie.description }}
+          </p>
         </div>
       </a>
       {% endfor %}

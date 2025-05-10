@@ -1,0 +1,117 @@
+/* Dark background */
+body.bg-gray-100 {
+  background-color: #121212 !important;
+  color: #e0e0e0;
+}
+
+/* Profile Card */
+.max-w-xl {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0;
+}
+
+.max-w-xl:hover {
+  background-color: #2a2a2a !important;
+}
+
+.shadow-lg {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.rounded-xl {
+  border-radius: 1rem !important;
+}
+
+.p-6 {
+  padding: 1.5rem !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Heading Text */
+.text-2xl {
+  color: #bb86fc;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+/* Profile Button Styles */
+.bg-blue-500 {
+  background-color: #6200ea !important;
+  color: white !important;
+}
+
+.bg-blue-500:hover {
+  background-color: #3700b3 !important;
+}
+
+.bg-red-500 {
+  background-color: #b00020 !important;
+  color: white !important;
+}
+
+.bg-red-500:hover {
+  background-color: #8a0000 !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.px-6 {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.py-2 {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem !important;
+}
+
+/* Hover Transition */
+.hover\:bg-blue-600:hover {
+  background-color: #3700b3 !important;
+}
+
+.hover\:bg-red-600:hover {
+  background-color: #8a0000 !important;
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+/* Flex Container */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-4 {
+  gap: 1rem !important;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Margins and Padding */
+.mb-4 {
+  margin-bottom: 1rem !important;
+}

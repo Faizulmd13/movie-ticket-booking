@@ -1,62 +1,64 @@
-/* Apply dark background to the entire page */
+/* Dark background */
 body.bg-gray-100 {
-    background-color: #121212 !important;
-    color: #e0e0e0;
-  }
-  
-  /* Heading text color */
-  .text-3xl {
-    color: #bb86fc;
-  }
-  
-  /* Button for My Bookings */
-  .bg-blue-500 {
-    background-color: #6200ea !important;
-    color: white !important;
-  }
-  
-  .bg-blue-500:hover {
-    background-color: #3700b3 !important;
-  }
-  
-  /* Movie card container */
-  .bg-white {
-    background-color: #1e1e1e !important;
-    color: #e0e0e0;
-  }
-  
-  /* Movie card hover effect (optional) */
-  .bg-white:hover {
-    background-color: #2a2a2a !important;
-  }
-  
-  /* Movie description text */
-  .text-gray-700 {
-    color: #cccccc !important;
-  }
-  
-  /* Movie subtitle or small text */
-  .text-sm {
-    color: #aaaaaa !important;
-  }
-  
-  /* Card image style */
-  img {
-    border-radius: 10px;
-    object-fit: cover;
-  }
-  
-  /* Grid padding */
-  .p-4 {
-    padding: 1rem !important;
-  }
-  
-  /* Headline spacing */
-  .mb-6 {
-    margin-bottom: 1.5rem !important;
-  }
-  
-  .mb-4 {
-    margin-bottom: 1rem !important;
-  }
-  
+  background-color: #121212 !important;
+  color: #e0e0e0;
+}
+
+/* Heading text */
+.text-3xl {
+  color: #bb86fc;
+}
+
+/* Profile button */
+.bg-gray-200 {
+  background-color: #2e2e2e !important;
+  color: #e0e0e0 !important;
+}
+
+.bg-gray-200:hover {
+  background-color: #3a3a3a !important;
+}
+
+/* Movie card */
+.bg-white {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.bg-white:hover {
+  background-color: #2a2a2a !important;
+}
+
+/* Image */
+img {
+  height: 250px;
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Description text */
+.text-gray-700 {
+  color: #cccccc !important;
+}
+
+.text-sm {
+  color: #aaaaaa !important;
+}
+
+/* Spacing utilities */
+.p-4 {
+  padding: 1rem !important;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-4 {
+  margin-bottom: 1rem !important;
+}

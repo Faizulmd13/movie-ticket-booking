@@ -4,9 +4,6 @@
     <meta charset="UTF-8" />
     <title>{{ movie.title }} - Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      const currentUserId = {{ (user_id if user_id is not none else 'null') | tojson }};
-    </script>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/movie_detail_styles.css') }}"
@@ -26,193 +23,21 @@
         <p class="text-gray-700 mb-2">{{ movie.description }}</p>
       </div>
 
-      <!-- Showtimes and Seat Booking -->
+      <!-- Showtimes -->
       <div class="bg-white p-6 rounded-xl shadow-md">
         <h3 class="text-2xl font-semibold mb-4">Showtimes</h3>
 
         {% for showtime in movie.showtimes %}
-        <div class="showtime mb-6">
-          <h3 class="text-xl font-medium mb-2">
+        <div>
+          <a
+            href="{{ url_for('seat_booking', showtime_id=showtime.id) }}"
+            class="block w-full bg-blue-500 text-white px-6 py-2 rounded-lg mb-2"
+          >
             {{ showtime.datetime_obj | datetimeformat }}
-          </h3>
-
-          <div class="space-y-4">
-            {% for i in range(0, showtime.seats | length, 10) %}
-            <div class="flex items-center justify-center space-x-8">
-              <!-- Left 5 seats -->
-              <div class="flex space-x-2">
-                {% for seat in showtime.seats[i:i+5] %}
-                <button
-                  id="seat-{{ seat.id }}"
-                  data-seat-number="{{ seat.seat_number }}"
-                  class="seat px-3 py-2 rounded-lg text-white text-sm {{ 'bg-gray-500' if seat.is_booked else 'bg-blue-500' }}"
-                  {%
-                  if
-                  seat.is_booked
-                  %}disabled{%
-                  endif
-                  %}
-                  onclick="console.log('seat:', {{ seat.id }}); bookSeat({{ seat.id }})"
-                >
-                  {{ seat.seat_number }}
-                </button>
-                {% endfor %}
-              </div>
-
-              <!-- Right 5 seats -->
-              <div class="flex space-x-2">
-                {% for seat in showtime.seats[i+5:i+10] %}
-                <button
-                  id="seat-{{ seat.id }}"
-                  data-seat-number="{{ seat.seat_number }}"
-                  class="seat px-3 py-2 rounded-lg text-white text-sm {{ 'bg-gray-500' if seat.is_booked else 'bg-blue-500' }}"
-                  {%
-                  if
-                  seat.is_booked
-                  %}disabled{%
-                  endif
-                  %}
-                  onclick="console.log('seat:', {{ seat.id }}); bookSeat({{ seat.id }})"
-                >
-                  {{ seat.seat_number }}
-                </button>
-                {% endfor %}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
+          </a>
         </div>
         {% endfor %}
       </div>
     </div>
-
-    <!-- Confirmation Modal -->
-    <div
-      id="confirmationModal"
-      class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
-    >
-      <div class="bg-white p-8 rounded-lg shadow-lg max-w-xs w-full">
-        <h3 class="text-xl font-semibold mb-4">Confirm Seat Booking</h3>
-        <p id="seatNumber" class="text-lg mb-4">
-          Are you sure you want to book this seat?
-        </p>
-        <div class="flex justify-between">
-          <button
-            id="cancelButton"
-            class="px-4 py-2 bg-gray-500 text-white rounded-md"
-          >
-            Cancel
-          </button>
-          <button
-            id="confirmButton"
-            class="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Confirm
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Success Message -->
-    <div
-      id="successMessage"
-      class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden"
-    >
-      <div
-        class="bg-white p-8 rounded-lg shadow-lg max-w-xs w-full text-center"
-      >
-        <h3 class="text-xl font-semibold">Booking Successful!</h3>
-        <p class="text-lg mt-2">Your seat has been successfully booked.</p>
-        <button
-          id="closeSuccessButton"
-          class="mt-4 px-4 py-2 bg-green-500 text-white rounded-md"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-
-    <script>
-      let selectedSeatId;
-      let selectedButton;
-
-      // Confirm booking function
-      function bookSeat(seatId) {
-        selectedSeatId = seatId;
-        selectedButton = document.getElementById("seat-" + seatId);
-
-        if (!selectedButton) {
-          console.error("No button found for seat ID:", seatId);
-          alert("Error: Could not find seat button.");
-          return;
-        }
-        const seatNumber = selectedButton.getAttribute("data-seat-number");
-        if (!seatNumber) {
-          console.error("Seat number missing for button:", selectedButton);
-          return;
-        }
-        document.getElementById(
-          "seatNumber"
-        ).textContent = `Are you sure you want to book seat ${seatNumber}?`;
-        document.getElementById("confirmationModal").classList.remove("hidden");
-      }
-
-      document
-        .getElementById("confirmButton")
-        .addEventListener("click", function () {
-          const userId = currentUserId;
-
-          fetch("/book", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              seat_id: selectedSeatId,
-              user_id: userId,
-            }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.message === "Seat booked") {
-                // Change the button color and disable it
-                selectedButton.classList.remove("bg-blue-500");
-                selectedButton.classList.add("bg-gray-500");
-                selectedButton.disabled = true;
-
-                // Close the modal and show success message
-                document
-                  .getElementById("successMessage")
-                  .classList.remove("hidden");
-                document
-                  .getElementById("confirmationModal")
-                  .classList.add("hidden");
-              } else {
-                // If the seat was already booked
-                alert(data.error);
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("An error occurred while booking the seat.");
-            });
-        });
-
-      // Handle cancel button click
-      document
-        .getElementById("cancelButton")
-        .addEventListener("click", function () {
-          // Close the modal
-          document.getElementById("confirmationModal").classList.add("hidden");
-        });
-
-      // Handle close success message button click
-      document
-        .getElementById("closeSuccessButton")
-        .addEventListener("click", function () {
-          // Close the success message
-          document.getElementById("successMessage").classList.add("hidden");
-        });
-    </script>
   </body>
 </html>
